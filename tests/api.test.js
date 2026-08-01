@@ -11,6 +11,8 @@ test('1. Получить токен', { tag: '@post' }, async ({ api }) => {
 });
 
 test.describe('Все тесты', () => {
+  let token;
+
   test.beforeAll(async({ api }) => {
     const { status, headers } = await api.challenger.post();
     token = headers['x-challenger'];
@@ -20,7 +22,7 @@ test.describe('Все тесты', () => {
     const { status, body } = await api.challenges.get(token);
 
     expect(status).toBe(200);
-    expect(body.challenges).toHaveLength(67);
+    expect(body.challenges).toHaveLength(89);
 
     for (const challenge of body.challenges) {
       expect(Object.keys(challenge).sort()).toEqual(['description', 'id', 'name', 'status',]);
@@ -342,7 +344,6 @@ test.describe('Все тесты', () => {
   });
 
   test.describe('Создать задачу с ошибкой в', () => {
-
     test('10. статусе', { tag: '@post' }, async ({ api }) => {
       const data = new TodoBuilder()
         .withTitle()
@@ -436,9 +437,12 @@ test.describe('Все тесты', () => {
         .build();
 
       const { status, statusText } = await api.todoList.putById({
+        data: {
+          ...data,
+          id
+        },
         token,
-        id,
-        data
+        id
       });
 
       expect(status).toBe(422);
