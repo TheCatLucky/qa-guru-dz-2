@@ -4,6 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "yarn playwright test",
+    "test:get": "playwright test --grep @get",
+    "test:post": "playwright test --grep @post",
+    "test:put": "playwright test --grep @put",
+    "test:delete": "playwright test --grep @delete",
     "codegen": "yarn playwright codegen",
     "report": "yarn playwright show-report",
     "ui": "yarn playwright test --ui"
